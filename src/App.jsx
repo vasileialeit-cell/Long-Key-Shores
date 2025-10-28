@@ -77,6 +77,19 @@ const Stat = ({ label, value }) => (
 );
 
 export default function App(){
+    
+  // 🔍 Test Supabase connection
+  useEffect(() => {
+    async function testConnection() {
+      const { data, error } = await supabase.from('properties').select('*')
+      if (error) {
+        console.error('❌ Supabase error:', error)
+      } else {
+        console.log('✅ Supabase connection works! Properties:', data)
+      }
+    }
+    testConnection()
+  }, [])
   const [db, setDb] = useState(loadDB());
   const [role, setRole] = useState('admin');
   const [tab, setTab] = useState('dashboard');
@@ -562,3 +575,7 @@ function PaymentForm({ db, onSave }){
     </div>
   );
 }
+
+import { supabase } from './supabaseClient'
+
+
